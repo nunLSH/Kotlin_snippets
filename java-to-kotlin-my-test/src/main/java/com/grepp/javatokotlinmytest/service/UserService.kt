@@ -1,51 +1,33 @@
-package com.grepp.javatokotlinmytest.service;
+package com.grepp.javatokotlinmytest.service
 
-import com.grepp.javatokotlinmytest.entity.User;
-import com.grepp.javatokotlinmytest.repository.UserRepository;
-import java.util.Optional;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import com.grepp.javatokotlinmytest.entity.User
+import com.grepp.javatokotlinmytest.repository.UserRepository
+import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
-public class UserService {
-
-    private final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository){
-        this.userRepository = userRepository;
-    }
-
+class UserService(private val userRepository: UserRepository) {
     // C
-    public User createUser(String name, String email){
-        User user = new User();
-        user.setName(name);
-        user.setEmail(email);
+    fun createUser(name: String?, email: String?): User {
+        val user = User()
+        user.name = name
+        user.email = email
 
-        return userRepository.save(user);
+        return userRepository.save(user)
     }
 
     // R
-    public Optional<User> findUser(Long id){
-        return userRepository.findById(id);
+    fun findUser(id: Long): Optional<User> {
+        return userRepository.findById(id)
     }
 
     // U
-    public User updateUser(Long id, String name){
-        User user = userRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("User not found"));
+    fun updateUser(id: Long, name: String?): User {
+        val user = userRepository.findById(id)
+            .orElseThrow { RuntimeException("User not found") }
 
-        user.setName(name);
+        user.name = name
 
-        return userRepository.save(user);
+        return userRepository.save(user)
     }
-
-//    @Transactional   // persistence context, JPA dirty checking, JPA flush, DB transaction commit
-//    public User updateUserV2(Long id, String name){
-//        User user = userRepository.findById(id)
-//            .orElseThrow(() -> new RuntimeException("User not found"));
-//
-//        user.setName(name);
-//
-//        return user;
-//    }
 }
