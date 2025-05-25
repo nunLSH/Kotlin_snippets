@@ -34,7 +34,10 @@ class UserServiceTest {
         //given
         String name = "jko";
         String email = "jko@google.com";
-        User user = new User(1L, name, email);
+        User user = new User();
+        user.setId(1L);
+        user.setName(name);
+        user.setEmail(email);
 
         when(userRepository.save(any(User.class))).thenReturn(user);
 
@@ -53,7 +56,10 @@ class UserServiceTest {
         // given
         String name = "jko";
         String email = "jko@google.com";
-        User user = new User(1L, name, email);
+        User user = new User();
+        user.setId(1L);
+        user.setName(name);
+        user.setEmail(email);
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
